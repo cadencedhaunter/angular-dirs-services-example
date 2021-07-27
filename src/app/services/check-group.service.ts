@@ -18,20 +18,20 @@ export class CheckGroupService {
 
   public addItem(item: CheckableItem): void {
     this.groupItems.add(item);
-    this.updateCheckedItemsCount();
+    this.updateCheckedItemsCountAndEmitState();
   }
 
   public removeItem(item: CheckableItem): void {
     this.groupItems.delete(item);
-    this.updateCheckedItemsCount();
+    this.updateCheckedItemsCountAndEmitState();
   }
 
   public toggleAllItems(isChecked: boolean): void {
     this.groupItems.forEach((item: CheckableItem) => item.checked = isChecked);
-    this.updateCheckedItemsCount();
+    this.updateCheckedItemsCountAndEmitState();
   }
 
-  public updateCheckedItemsCount(): void {
+  public updateCheckedItemsCountAndEmitState(): void {
     this.checkedItemsCount = 0;
     this.groupItems.forEach((item: CheckableItem) => {
       if (item.checked) {

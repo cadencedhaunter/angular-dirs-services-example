@@ -33,7 +33,6 @@ export class AppComponent {
     {
       id: 10,
       title: 'A',
-      checked: true,
     },
     {
       id: 11,

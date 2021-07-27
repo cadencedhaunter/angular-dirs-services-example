@@ -9,6 +9,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import {
   CheckableItem,
   CheckGroupService,
@@ -18,18 +20,21 @@ import {
   selector: '[appCheckGroupItem]',
 })
 export class CheckGroupItemDirective implements OnInit, OnChanges, OnDestroy {
-
   @Input() public checkableItem: CheckableItem;
+
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     private readonly checkGroup: CheckGroupService,
-    private readonly matCheckbox: MatCheckbox,
+    private readonly matCheckbox: MatCheckbox
   ) {}
 
   public ngOnInit(): void {
-    this.checkGroup.checkGroupState$.subscribe(() => {
-      this.matCheckbox.checked = this.checkableItem.checked;
-    });
+    this.checkGroup.checkGroupState$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.matCheckbox.checked = this.checkableItem.checked;
+      });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -41,14 +46,16 @@ export class CheckGroupItemDirective implements OnInit, OnChanges, OnDestroy {
       }
     }
   }
-  
+
   public ngOnDestroy(): void {
     this.checkGroup.removeItem(this.checkableItem);
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   @HostListener('change', ['$event.checked'])
   public onToggle(isChecked: boolean): void {
     this.checkableItem.checked = isChecked;
-    this.checkGroup.updateCheckedItemsCount();
+    this.checkGroup.updateCheckedItemsCountAndEmitState();
   }
 }
