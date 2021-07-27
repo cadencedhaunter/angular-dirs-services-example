@@ -5,7 +5,6 @@ export interface CheckableItem {
   checked?: boolean;
 }
 
-/* let us think. observable or refs */
 @Injectable({
   providedIn: 'root',
 })

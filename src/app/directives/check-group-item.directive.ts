@@ -4,6 +4,7 @@ import {
   HostListener,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -16,8 +17,8 @@ import {
 @Directive({
   selector: '[appCheckGroupItem]',
 })
-export class CheckGroupItemDirective implements OnInit, OnChanges {
-  
+export class CheckGroupItemDirective implements OnInit, OnChanges, OnDestroy {
+
   @Input() public checkableItem: CheckableItem;
 
   constructor(
@@ -39,6 +40,10 @@ export class CheckGroupItemDirective implements OnInit, OnChanges {
         this.matCheckbox.checked = this.checkableItem.checked;
       }
     }
+  }
+  
+  public ngOnDestroy(): void {
+    this.checkGroup.removeItem(this.checkableItem);
   }
 
   @HostListener('change', ['$event.checked'])

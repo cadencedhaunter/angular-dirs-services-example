@@ -1,8 +1,21 @@
+<div style="max-width: 900px; margin: auto; margin-top: 100px;">
+  <div appCheckGroup (groupCheckEvent)="logGroupCheckEvent($event)">
+    <mat-checkbox appCheckGroupToggler>All items in first group</mat-checkbox>
 
-<div appCheckGroup (groupCheckEvent)="logGroupCheckEvent($event)">
-  <mat-checkbox appCheckGroupToggler>All items</mat-checkbox>
-  
-  <div *ngFor="let item of items">
-    <mat-checkbox appCheckGroupItem [checkableItem]="item">{{item.title}}</mat-checkbox>
+    <div *ngFor="let item of items">
+      <mat-checkbox appCheckGroupItem [checkableItem]="item">
+        {{ item.title }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div style="margin-top: 100px;" appCheckGroup (groupCheckEvent)="logGroupCheckEvent($event)">
+    <mat-checkbox appCheckGroupToggler>All items in second group</mat-checkbox>
+
+    <div *ngFor="let item of anotherItems">
+      <mat-checkbox appCheckGroupItem [checkableItem]="item">
+        {{ item.title }}
+      </mat-checkbox>
+    </div>
   </div>
 </div>

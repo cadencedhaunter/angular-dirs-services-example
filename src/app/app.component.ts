@@ -29,6 +29,34 @@ export class AppComponent {
     }
   ];
 
+  public anotherItems: Item[] = [
+    {
+      id: 10,
+      title: 'A',
+      checked: true,
+    },
+    {
+      id: 11,
+      title: 'B',
+    },    
+    {
+      id: 12,
+      title: 'C',
+    },    
+    {
+      id: 14,
+      title: 'D',
+    },    
+    {
+      id: 15,
+      title: 'E',
+    },    
+    {
+      id: 16,
+      title: 'F',
+    },
+  ];
+
   constructor() {}
 
   public logGroupCheckEvent(items: CheckableItem[]): void {
